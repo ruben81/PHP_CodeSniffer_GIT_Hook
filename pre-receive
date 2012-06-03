@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# PHP_CodeSniffer_GIT_Hook
+# A server-side git hook script for checking PHP, JavaScript and CSS code styling using PHP_CodeSniffer
+#
+# @ Version : 20120603
+# @ License : MIT
+# @ Author : Nassim KACHA <nassim.kacha@blueicefield.com>
+
+# The following command can be customized as needed
+COMMAND='phpcs --report=summary'
+TEMPDIR=`mktemp -d`
+    
+while read oldrev newrev refname; do
+    files=`git diff --name-only ${oldrev} ${newrev}`
+    for file in ${files}; do
+        object=`git ls-tree --full-name -r ${newrev} | grep ${file} | awk '{ print $3 }'`
+        if [ -z ${object} ]; then continue; fi
+        mkdir -p "${TEMPDIR}/`dirname ${file}`" &> /dev/null
+        git cat-file blob ${object} > ${TEMPDIR}/${file}
+    done;
+done
+${COMMAND} ${TEMPDIR}
+STATUS=$?
+rm -rf ${TEMPDIR} &> /dev/null
+exit ${STATUS}
