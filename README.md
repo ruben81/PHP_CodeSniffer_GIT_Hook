@@ -5,6 +5,7 @@ A server-side git hook script for checking PHP, JavaScript and CSS code styling 
 
 REQUIREMENTS
 ------------
+- GIT... of course ;-)
 - Bash Shell
 - PHP_CodeSniffer : http://pear.php.net/manual/fr/package.php.php-codesniffer.php
 
