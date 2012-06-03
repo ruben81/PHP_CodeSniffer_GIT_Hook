@@ -10,6 +10,6 @@ INSTALLATION
 - Copy the pre-receive file into the hook directory of the remote GIT
 repository.
 -  Add the execution permission to copied file : 
-'''bash
+```bash
 chmod +x /REPOSITORY_PATH/hooks/pre-receive
-''' 
+``` 
