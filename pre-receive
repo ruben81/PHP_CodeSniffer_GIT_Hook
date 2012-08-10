@@ -14,7 +14,7 @@ TEMPDIR=`mktemp -d`
 while read oldrev newrev refname; do
     files=`git diff --name-only ${oldrev} ${newrev}`
     for file in ${files}; do
-        object=`git ls-tree --full-name -r ${newrev} | grep ${file} | awk '{ print $3 }'`
+        object=`git ls-tree --full-name -r ${newrev} | egrep "(\s)${file}\$" | awk '{ print $3 }'`
         if [ -z ${object} ]; then continue; fi
         mkdir -p "${TEMPDIR}/`dirname ${file}`" &> /dev/null
         git cat-file blob ${object} > ${TEMPDIR}/${file}
